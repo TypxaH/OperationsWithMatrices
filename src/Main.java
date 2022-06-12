@@ -1,5 +1,26 @@
 public class Main {
-//Като резултат връща минорната матрица с премахване на ред row и колона col
+    public static double[][] subtractMatrices(double[][] matrix, double[][] matrix1) {
+        double[][] resultMatrix = new double[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                resultMatrix[i][j] = matrix[i][j] - matrix1[i][j];
+            }
+        }
+
+        return resultMatrix;
+    }
+
+    public static double[][] addMatrices(double[][] matrix, double[][] matrix1) {
+        double[][] resultMatrix = new double[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                resultMatrix[i][j] = matrix[i][j] + matrix1[i][j];
+            }
+        }
+
+        return resultMatrix;
+    }
+
     public static double[][] getCofactor(double[][] matrix, int row, int col) {
         double[][] tempMatrix = new double[matrix.length - 1][matrix[0].length - 1];
         int nextR = 0, nextC = 0;
@@ -44,6 +65,7 @@ public class Main {
                 inverseMatrix[j][i] = sign * getDeterminant(getCofactor(matrix, i, j)) / determinant;
             }
         }
+
         return inverseMatrix;
     }
 
@@ -59,18 +81,26 @@ public class Main {
             sum += sign * matrix[0][col] * getDeterminant(getCofactor(matrix, 0, col));
             sign *= -1;
         }
+
         return sum;
     }
 
     public static void main(String[] args) {
-        double[][] array = {
+        double[][] array1 = {
                 {2, 6, 3},
                 {4, -1, 3},
                 {1, 3, 2},
         };
+        double[][] array2 = {
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9.3},
+        };
         //System.out.println(getDeterminant(array));
         //printMatrix(getCofactor(array, 2, 0));
-        double[][] inverse = getInverseMatrix(array);
-        printMatrix(inverse);
+        //double[][] inverse = getInverseMatrix(array);
+        //printMatrix(addMatrices(array1,array2));
+        printMatrix(subtractMatrices(array1,array2));
+
     }
 }
