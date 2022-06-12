@@ -1,4 +1,19 @@
 public class Main {
+
+    public static double[][] multiplyMatrices(double[][] matrixOne, double[][] matrixTwo) {
+        double[][] resultMatrix = new double[matrixOne.length][matrixTwo[0].length];
+        for (int rowsOne = 0; rowsOne < matrixOne.length; rowsOne++) {
+            for (int colsTwo = 0; colsTwo < matrixTwo[0].length; colsTwo++) {
+                double cellSum = 0;
+                for (int colsOne = 0; colsOne < matrixOne[0].length; colsOne++) {
+                    cellSum += matrixOne[rowsOne][colsOne] * matrixTwo[colsOne][colsTwo];
+                    resultMatrix[rowsOne][colsTwo] = cellSum;
+                }
+            }
+        }
+        return resultMatrix;
+
+    }
     public static double[][] subtractMatrices(double[][] matrix, double[][] matrix1) {
         double[][] resultMatrix = new double[matrix.length][matrix[0].length];
         for (int i = 0; i < matrix.length; i++) {
@@ -58,18 +73,18 @@ public class Main {
     public static double[][] getInverseMatrix(double[][] matrix) {
         double[][] inverseMatrix = new double[matrix.length][matrix.length];
         int sign;
-        double determinant = getDeterminant(matrix);
+        double determinant = calculateDeterminant(matrix);
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix.length; j++) {
                 sign = (i + j) % 2 == 0 ? 1 : -1;
-                inverseMatrix[j][i] = sign * getDeterminant(getCofactor(matrix, i, j)) / determinant;
+                inverseMatrix[j][i] = sign * calculateDeterminant(getCofactor(matrix, i, j)) / determinant;
             }
         }
 
         return inverseMatrix;
     }
 
-    public static double getDeterminant(double[][] matrix) {
+    public static double calculateDeterminant(double[][] matrix) {
         double sum = 0;
         int sign = 1;
         if (matrix.length == 1) {
@@ -78,7 +93,7 @@ public class Main {
             return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
         }
         for (int col = 0; col < matrix[0].length; col++) {
-            sum += sign * matrix[0][col] * getDeterminant(getCofactor(matrix, 0, col));
+            sum += sign * matrix[0][col] * calculateDeterminant(getCofactor(matrix, 0, col));
             sign *= -1;
         }
 
@@ -94,13 +109,13 @@ public class Main {
         double[][] array2 = {
                 {1, 2, 3},
                 {4, 5, 6},
-                {7, 8, 9.3},
+                {7, 8, 9},
         };
-        //System.out.println(getDeterminant(array));
+        //System.out.println(calculateDeterminant(array));
         //printMatrix(getCofactor(array, 2, 0));
         //double[][] inverse = getInverseMatrix(array);
         //printMatrix(addMatrices(array1,array2));
-        printMatrix(subtractMatrices(array1,array2));
+        printMatrix(multiplyMatrices(array1,array2));
 
     }
 }
