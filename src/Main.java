@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
+    static double[][] matrixA, matrixB, result;
     private static int getColumns() {
         System.out.print("Enter number of the columns of the matrix: ");
         return scanner.nextInt();
@@ -152,43 +153,32 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        printMenu();
-        double[][] matrix1, matrix2, result;
+        printMenu();       
         double determinant;
         int operation = scanner.nextInt();
         switch (operation) {
             case 1:
-                matrix1 = inputMatrix(getRows(), getColumns());
+                matrixA = inputMatrix(getRows(), getColumns());
                 System.out.println("\nThe input matrix is:");
-                printMatrix(matrix1);
+                printMatrix(matrixA);
                 break;
             case 2:
-                matrix1 = inputMatrix(getRows(), getColumns(),'A');
-                matrix2 = inputMatrix(matrix1.length, matrix1[0].length,'B');
-                System.out.println("\nThe matrix A is:");
-                printMatrix(matrix1);
-                System.out.println("\nThe matrix B is:");
-                printMatrix(matrix2);
-                result = addMatrices(matrix1, matrix2);
+                inputTwoMatrices();
+                result = addMatrices(matrixA, matrixB);
                 System.out.println("\nThe result matrix of the addition is:");
                 printMatrix(result);
                 break;
             case 3:
-                matrix1 = inputMatrix(getRows(), getColumns(),'A');
-                matrix2 = inputMatrix(matrix1.length, matrix1[0].length,'B');
-                System.out.println("\nThe matrix A is:");
-                printMatrix(matrix1);
-                System.out.println("\nThe matrix B is:");
-                printMatrix(matrix2);
-                result = subtractMatrices(matrix1, matrix2);
+                inputTwoMatrices();
+                result = subtractMatrices(matrixA, matrixB);
                 System.out.println("\nThe result matrix of the subtraction is:");
                 printMatrix(result);
                 break;
             case 4:
-                matrix1 = inputMatrix(getRows(), getColumns());
-                matrix2 = inputMatrix(getRows(), getColumns());
+                matrixA = inputMatrix(getRows(), getColumns());
+                matrixB = inputMatrix(getRows(), getColumns());
 
-                result = multiplyMatrices(matrix1, matrix2);
+                result = multiplyMatrices(matrixA, matrixB);
                 if (result == null) {
                     System.out.println("The number of the column in matrix A must be equal to the number of the rows in matrix B!");
                 }else{
@@ -199,18 +189,18 @@ public class Main {
             case 5:
                 System.out.print("Enter number of the rows of a square matrix À: ");
                 int n = scanner.nextInt();
-                matrix1 = inputMatrix(n, n);
+                matrixA = inputMatrix(n, n);
                 System.out.println("\nThe matrix A is:");
-                printMatrix(matrix1);
-                System.out.println("\nThe determinant of the matrix is det(A) = " + calculateDeterminant(matrix1));
+                printMatrix(matrixA);
+                System.out.println("\nThe determinant of the matrix is det(A) = " + calculateDeterminant(matrixA));
                 break;
             case 6:
                 System.out.print("Enter number of the rows of a square matrix: ");
                 n = scanner.nextInt();
-                matrix1 = inputMatrix(n, n);
+                matrixA = inputMatrix(n, n);
                 System.out.println("\nThe matrix A is:");
-                printMatrix(matrix1);
-                result = getInverseMatrix(matrix1);
+                printMatrix(matrixA);
+                result = getInverseMatrix(matrixA);
                 if (result != null) {
                     System.out.println("\nThe inverse of the matrix A is the matrix:");
                     printMatrix(result);
@@ -222,10 +212,10 @@ public class Main {
             case 7:
                 System.out.print("Enter number of the rows of a square matrix: ");
                 n = scanner.nextInt();
-                matrix1 = inputMatrix(n, n);
+                matrixA = inputMatrix(n, n);
                 System.out.println("Matrix A is:");
-                printMatrix(matrix1);
-                determinant = calculateDeterminant(matrix1);
+                printMatrix(matrixA);
+                determinant = calculateDeterminant(matrixA);
                 if (determinant != 0) {
                     System.out.println("\nThe matrix A can be converted to the identity matrix.");
                 }
@@ -253,6 +243,15 @@ public class Main {
         printMatrix(addMatrices(array1,array2));
         printMatrix(multiplyMatrices(array1,array2));
          */
+    }
+
+    private static void inputTwoMatrices() {
+        matrixA = inputMatrix(getRows(), getColumns(),'A');
+        matrixB = inputMatrix(matrixA.length, matrixA[0].length,'B');
+        System.out.println("\nThe matrix A is:");
+        printMatrix(matrixA);
+        System.out.println("\nThe matrix B is:");
+        printMatrix(matrixB);
     }
 
 
