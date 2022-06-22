@@ -2,18 +2,14 @@ import java.util.Scanner;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
-
-
     private static int getColumns() {
         System.out.print("Enter number of the columns of the matrix: ");
         return scanner.nextInt();
     }
-
     private static int getRows() {
         System.out.print("Enter number of the rows of the matrix: ");
         return scanner.nextInt();
     }
-
     public static double[][] inputMatrix(int rowsNumber, int colsNumber) {
         double[][] matrix = new double[rowsNumber][colsNumber];
         for (int i = 0; i < rowsNumber; i++) {
@@ -25,7 +21,17 @@ public class Main {
         }
         return matrix;
     }
-
+    public static double[][] inputMatrix(int rowsNumber, int colsNumber, char nameOfMatrix) {
+        double[][] matrix = new double[rowsNumber][colsNumber];
+        for (int i = 0; i < rowsNumber; i++) {
+            System.out.printf("\nEnter the elements of the matrix %c in row %d!\n",nameOfMatrix, i + 1);
+            for (int j = 0; j < colsNumber; j++) {
+                System.out.printf(" %c[%d][%d] = \r",nameOfMatrix, i + 1, j + 1);
+                matrix[i][j] = scanner.nextDouble();
+            }
+        }
+        return matrix;
+    }
     public static double[][] multiplyMatrices(double[][] matrixOne, double[][] matrixTwo) {
         if (matrixOne[0].length != matrixTwo.length) {
             return null;
@@ -116,20 +122,19 @@ public class Main {
         }
         return inverseMatrix;
     }
-
+    //Детерминантата се изчислява чрез развиване на първия ред на матрицата. Използва се рекурсия по минорните матрици.
     public static double calculateDeterminant(double[][] matrix) {
         double sum = 0;
         int sign = 1;
         if (matrix.length == 1) {
             return matrix[0][0];
-        } else if (matrix.length == 2) {
-            return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-        }
+        } //else if (matrix.length == 2) {
+        //    return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+        //}
         for (int col = 0; col < matrix[0].length; col++) {
             sum += sign * matrix[0][col] * calculateDeterminant(getCofactor(matrix, 0, col));
             sign *= -1;
         }
-
         return sum;
     }
 
@@ -158,22 +163,31 @@ public class Main {
                 printMatrix(matrix1);
                 break;
             case 2:
-                matrix1 = inputMatrix(getRows(), getColumns());
-                matrix2 = inputMatrix(matrix1.length, matrix1[0].length);
+                matrix1 = inputMatrix(getRows(), getColumns(),'A');
+                matrix2 = inputMatrix(matrix1.length, matrix1[0].length,'B');
+                System.out.println("\nThe matrix A is:");
+                printMatrix(matrix1);
+                System.out.println("\nThe matrix B is:");
+                printMatrix(matrix2);
                 result = addMatrices(matrix1, matrix2);
                 System.out.println("\nThe result matrix of the addition is:");
                 printMatrix(result);
                 break;
             case 3:
-                matrix1 = inputMatrix(getRows(), getColumns());
-                matrix2 = inputMatrix(matrix1.length, matrix1[0].length);
+                matrix1 = inputMatrix(getRows(), getColumns(),'A');
+                matrix2 = inputMatrix(matrix1.length, matrix1[0].length,'B');
+                System.out.println("\nThe matrix A is:");
+                printMatrix(matrix1);
+                System.out.println("\nThe matrix B is:");
+                printMatrix(matrix2);
                 result = subtractMatrices(matrix1, matrix2);
                 System.out.println("\nThe result matrix of the subtraction is:");
                 printMatrix(result);
                 break;
             case 4:
                 matrix1 = inputMatrix(getRows(), getColumns());
-                matrix2 = inputMatrix(getRows(), getRows());
+                matrix2 = inputMatrix(getRows(), getColumns());
+
                 result = multiplyMatrices(matrix1, matrix2);
                 if (result == null) {
                     System.out.println("The number of the column in matrix A must be equal to the number of the rows in matrix B!");
@@ -181,18 +195,21 @@ public class Main {
                     System.out.println("\nThe result matrix of the multiplication is:");
                     printMatrix(result);
                 }
-
                 break;
             case 5:
-                System.out.print("Enter number of the rows of a square matrix: ");
+                System.out.print("Enter number of the rows of a square matrix А: ");
                 int n = scanner.nextInt();
                 matrix1 = inputMatrix(n, n);
-                System.out.println("\nThe determinant of the matrix is D = " + calculateDeterminant(matrix1));
+                System.out.println("\nThe matrix A is:");
+                printMatrix(matrix1);
+                System.out.println("\nThe determinant of the matrix is det(A) = " + calculateDeterminant(matrix1));
                 break;
             case 6:
                 System.out.print("Enter number of the rows of a square matrix: ");
                 n = scanner.nextInt();
                 matrix1 = inputMatrix(n, n);
+                System.out.println("\nThe matrix A is:");
+                printMatrix(matrix1);
                 result = getInverseMatrix(matrix1);
                 if (result != null) {
                     System.out.println("\nThe inverse of the matrix A is the matrix:");
@@ -206,6 +223,7 @@ public class Main {
                 System.out.print("Enter number of the rows of a square matrix: ");
                 n = scanner.nextInt();
                 matrix1 = inputMatrix(n, n);
+                System.out.println("Matrix A is:");
                 printMatrix(matrix1);
                 determinant = calculateDeterminant(matrix1);
                 if (determinant != 0) {
