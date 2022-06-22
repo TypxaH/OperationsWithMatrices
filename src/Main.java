@@ -3,14 +3,17 @@ import java.util.Scanner;
 public class Main {
     static Scanner scanner = new Scanner(System.in);
     static double[][] matrixA, matrixB, result;
+
     private static int getColumns() {
         System.out.print("Enter number of the columns of the matrix: ");
         return scanner.nextInt();
     }
+
     private static int getRows() {
         System.out.print("Enter number of the rows of the matrix: ");
         return scanner.nextInt();
     }
+
     public static double[][] inputMatrix(int rowsNumber, int colsNumber) {
         double[][] matrix = new double[rowsNumber][colsNumber];
         for (int i = 0; i < rowsNumber; i++) {
@@ -22,6 +25,19 @@ public class Main {
         }
         return matrix;
     }
+
+    public static double[][] inputMatrix(int rowsNumber, int colsNumber, char nameOfMatrix) {
+        double[][] matrix = new double[rowsNumber][colsNumber];
+        for (int i = 0; i < rowsNumber; i++) {
+            System.out.printf("\nEnter the elements of the matrix %c in row %d!\n", nameOfMatrix, i + 1);
+            for (int j = 0; j < colsNumber; j++) {
+                System.out.printf(" %c[%d][%d] = \r", nameOfMatrix, i + 1, j + 1);
+                matrix[i][j] = scanner.nextDouble();
+            }
+        }
+        return matrix;
+    }
+
     private static void inputSquareMatrix() {
         int n;
         System.out.print("Enter number of the rows of a square matrix А: ");
@@ -30,25 +46,16 @@ public class Main {
         System.out.println("\nThe matrix A is:");
         printMatrix(matrixA);
     }
+
     private static void inputTwoMatrices() {
-        matrixA = inputMatrix(getRows(), getColumns(),'A');
-        matrixB = inputMatrix(matrixA.length, matrixA[0].length,'B');
+        matrixA = inputMatrix(getRows(), getColumns(), 'A');
+        matrixB = inputMatrix(matrixA.length, matrixA[0].length, 'B');
         System.out.println("\nThe matrix A is:");
         printMatrix(matrixA);
         System.out.println("\nThe matrix B is:");
         printMatrix(matrixB);
     }
-    public static double[][] inputMatrix(int rowsNumber, int colsNumber, char nameOfMatrix) {
-        double[][] matrix = new double[rowsNumber][colsNumber];
-        for (int i = 0; i < rowsNumber; i++) {
-            System.out.printf("\nEnter the elements of the matrix %c in row %d!\n",nameOfMatrix, i + 1);
-            for (int j = 0; j < colsNumber; j++) {
-                System.out.printf(" %c[%d][%d] = \r",nameOfMatrix, i + 1, j + 1);
-                matrix[i][j] = scanner.nextDouble();
-            }
-        }
-        return matrix;
-    }
+
     public static double[][] multiplyMatrices(double[][] matrixOne, double[][] matrixTwo) {
         if (matrixOne[0].length != matrixTwo.length) {
             return null;
@@ -66,6 +73,7 @@ public class Main {
         return resultMatrix;
 
     }
+
     public static double[][] subtractMatrices(double[][] matrixOne, double[][] matrixTwo) {
         double[][] resultMatrix = new double[matrixOne.length][matrixOne[0].length];
         for (int i = 0; i < matrixOne.length; i++) {
@@ -76,6 +84,7 @@ public class Main {
 
         return resultMatrix;
     }
+
     public static double[][] addMatrices(double[][] matrixOne, double[][] matrixTwo) {
         double[][] resultMatrix = new double[matrixOne.length][matrixOne[0].length];
         for (int i = 0; i < matrixOne.length; i++) {
@@ -86,6 +95,7 @@ public class Main {
 
         return resultMatrix;
     }
+
     public static double[][] getCofactor(double[][] matrix, int row, int col) {
         double[][] tempMatrix = new double[matrix.length - 1][matrix[0].length - 1];
         int nextR = 0, nextC = 0;
@@ -106,6 +116,7 @@ public class Main {
 
         return tempMatrix;
     }
+
     public static void printMatrix(double[][] matrix) {
         for (int row = 0; row < matrix.length; row++) {
             for (int column = 0; column < matrix[0].length; column++) {
@@ -118,6 +129,7 @@ public class Main {
             System.out.println();
         }
     }
+
     public static double[][] getInverseMatrix(double[][] matrix) {
         double determinant = calculateDeterminant(matrix);
         if (determinant == 0.0) {
@@ -134,6 +146,7 @@ public class Main {
         }
         return inverseMatrix;
     }
+
     //Детерминантата се изчислява чрез развиване на първия ред на матрицата. Използва се рекурсия по минорните матрици.
     public static double calculateDeterminant(double[][] matrix) {
         double sum = 0;
@@ -149,6 +162,7 @@ public class Main {
         }
         return sum;
     }
+
     private static void printMenu() {
         System.out.println("\n----------Operations with matrices----------");
         System.out.println("1. Enter and print the matrix (A) from keyboard;");
@@ -161,8 +175,9 @@ public class Main {
         System.out.println("---------------------------------------------------------");
         System.out.print("Choose an operation (1-7): ");
     }
+
     public static void main(String[] args) {
-        printMenu();       
+        printMenu();
         double determinant;
         int n;
         int operation = scanner.nextInt();
@@ -191,7 +206,7 @@ public class Main {
                 result = multiplyMatrices(matrixA, matrixB);
                 if (result == null) {
                     System.out.println("The number of the column in matrix A must be equal to the number of the rows in matrix B!");
-                }else{
+                } else {
                     System.out.println("\nThe result matrix of the multiplication is:");
                     printMatrix(result);
                 }
@@ -206,7 +221,7 @@ public class Main {
                 if (result != null) {
                     System.out.println("\nThe inverse of the matrix A is the matrix:");
                     printMatrix(result);
-                }else{
+                } else {
                     System.out.println("\nThe matrix A is NOT invertible.");
                 }
                 break;
@@ -216,8 +231,7 @@ public class Main {
                 determinant = calculateDeterminant(matrixA);
                 if (determinant != 0) {
                     System.out.println("\nThe matrix A can be converted to the identity matrix.");
-                }
-                else{
+                } else {
                     System.out.println("\nThe matrix A can't be converted to the identity matrix.");
                 }
                 break;
