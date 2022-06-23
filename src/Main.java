@@ -182,10 +182,10 @@ public class Main {
         System.out.println("---------------------------------------------------------");
         System.out.print("Choose an operation (1-7): ");
     }
+
     private static void identityMenuItem() {
-        double determinant;
         inputSquareMatrix();
-        determinant = calculateDeterminant(matrixA);
+        double determinant = calculateDeterminant(matrixA);
         if (determinant != 0) {
             System.out.println("\nThe matrix A can be converted to the identity matrix.");
         } else {
@@ -193,7 +193,7 @@ public class Main {
         }
     }
 
-    private static void reverseMatrixMenuItem() {
+    private static void inverseMatrixMenuItem() {
         inputSquareMatrix();
         result = getInverseMatrix(matrixA);
         if (result != null) {
@@ -234,10 +234,9 @@ public class Main {
         System.out.println("\nThe input matrix is:");
         printMatrix(matrixA);
     }
+
     public static void main(String[] args) {
         printMenu();
-        double determinant;
-        int n;
         int operation = scanner.nextInt();
         switch (operation) {
             case 1:
@@ -257,7 +256,7 @@ public class Main {
                 System.out.println("\nThe determinant of the matrix is det(A) = " + calculateDeterminant(matrixA));
                 break;
             case 6:
-                reverseMatrixMenuItem();
+                inverseMatrixMenuItem();
                 break;
 
             case 7:
@@ -268,21 +267,43 @@ public class Main {
         }
 
 
-        /*
-        double[][] arrayA = {
-                {1, 0, 0},
-                {0, 2, 0},
-                {0, 0, 1},
+/*        double[][] arrayA = {
+                {2, -10, -2},
+                {14, 12, 10},
+                {4, -2, 2},
         };
         double[][] arrayB = {
-                {1, 2, 3},
-                {4, 5, 7},
-                {7, 8, 0},
+                {6, 10, -2},
+                {0, -12, -4},
+                {-5, 2, -2},
         };*/
-        //System.out.println(calculateDeterminant(array));
-       // printMatrix(getCofactor(array, 2, 0));
-        //printMatrix(getInverseMatrix(array1));
-        //printMatrix(addMatrices(array1,array2));
-        //printMatrix(multiplyMatrices(array1,array2));
+//        printMatrix(addMatrices(arrayA,arrayB));
+
+//        printMatrix(subtractMatrices(arrayA,arrayB));
+
+        /*result = multiplyMatrices(arrayA, arrayB);
+        if (result == null) {
+            System.out.println("The number of the column in matrix A must be equal to the number of the rows in matrix B!");
+        } else {
+            System.out.println("\nThe result matrix of the multiplication is:");
+            printMatrix(result);
+        }*/
+
+//        System.out.println(calculateDeterminant(arrayA));
+
+      /*  result = getInverseMatrix(arrayA);
+        if (result != null) {
+            System.out.println("\nThe inverse of the matrix A is the matrix:");
+            printMatrix(result);
+        } else {
+            System.out.println("\nThe matrix A is NOT invertible.");
+        }*/
+
+       /* double determinant = calculateDeterminant(arrayA);
+        if (determinant != 0) {
+            System.out.println("\nThe matrix A can be converted to the identity matrix.");
+        } else {
+            System.out.println("\nThe matrix A can't be converted to the identity matrix.");
+        }*/
     }
 }
